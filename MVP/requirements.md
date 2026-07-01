@@ -1,0 +1,173 @@
+# MVP Requirements
+
+This document defines the functional and non-functional requirements for the Veridia MVP.
+
+The objective is to validate the core architectural concepts, not to provide a production-ready implementation.
+
+---
+
+# Functional Requirements
+
+## FR-001 — Document Ingestion
+
+The system shall accept a structured document as input.
+
+Minimum supported format:
+
+- JSON
+
+Future versions may support additional formats.
+
+---
+
+## FR-002 — Delta Generation
+
+The system shall transform an input document into one or more deltas.
+
+Each delta shall include:
+
+- Unique identifier
+- Knowledge atom identifier
+- Operation type
+- Value
+- Version tag
+- Causal trigger
+
+---
+
+## FR-003 — Append-Only Storage
+
+The system shall store generated deltas in an append-only log.
+
+Existing deltas shall never be modified or deleted.
+
+---
+
+## FR-004 — Truth State Reconstruction
+
+The system shall reconstruct a truth state from an ordered sequence of deltas.
+
+Given the same input, reconstruction shall always produce the same output.
+
+---
+
+## FR-005 — Current State Retrieval
+
+The system shall return the latest truth state available.
+
+---
+
+## FR-006 — Historical State Retrieval
+
+The system shall reconstruct the truth state for any available version tag.
+
+---
+
+## FR-007 — Trajectory Retrieval
+
+The system shall return the complete sequence of deltas affecting a knowledge atom.
+
+---
+
+## FR-008 — Version Ordering
+
+The system shall guarantee deterministic ordering of version tags.
+
+---
+
+## FR-009 — Basic Validation
+
+The system shall reject malformed deltas.
+
+Validation includes:
+
+- Missing required fields
+- Invalid version tags
+- Invalid operation types
+
+---
+
+## FR-010 — JSON Serialization
+
+The system shall support serialization and deserialization of stored deltas using JSON.
+
+---
+
+# Non-Functional Requirements
+
+## NFR-001 — Determinism
+
+Identical inputs shall always produce identical outputs.
+
+---
+
+## NFR-002 — Simplicity
+
+The implementation shall prioritize readability over optimization.
+
+---
+
+## NFR-003 — Modularity
+
+Core components should remain independent whenever possible.
+
+---
+
+## NFR-004 — Reproducibility
+
+The same dataset shall always generate identical reconstructed states.
+
+---
+
+## NFR-005 — Extensibility
+
+The architecture should allow future extensions without requiring major redesign.
+
+---
+
+# Out of Scope
+
+The MVP does **not** include:
+
+- Distributed systems
+- Parallel execution
+- Authentication
+- Authorization
+- Network APIs
+- Database backends
+- High availability
+- Performance optimization
+- Automatic scaling
+- Vector databases
+- Embedding generation
+- Semantic similarity search
+
+---
+
+# Success Criteria
+
+The MVP is considered successful if it demonstrates all of the following:
+
+- Documents can be ingested.
+- Deltas are generated correctly.
+- Deltas are stored immutably.
+- Truth states are reconstructed deterministically.
+- Historical versions can be queried.
+- Trajectories can be reconstructed.
+- Results are reproducible across executions.
+
+---
+
+# Future Extensions
+
+Future versions may introduce:
+
+- Persistent storage engines
+- REST APIs
+- gRPC interfaces
+- Concurrent ingestion
+- Conflict resolution
+- Distributed execution
+- LLM-assisted transformation
+- Advanced validation
+- Benchmark integration
