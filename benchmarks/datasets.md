@@ -63,8 +63,8 @@ Every dataset documents what it represents and what it does not represent. No da
 ```
 
 ###atoms.json
- '''
-
+ 
+```json
 {
   "atoms": [
     {
@@ -81,11 +81,10 @@ Every dataset documents what it represents and what it does not represent. No da
     }
   ]
 }
-'''
-
+```
 ###states.json
-'''
-
+ 
+```json
 {
   "versions": [
     {
@@ -106,11 +105,11 @@ Every dataset documents what it represents and what it does not represent. No da
     }
   ]
 }
-'''
+```
 
 ###trajectories.json
-'''
 
+```json
 {
   "atoms": [
     {
@@ -144,8 +143,7 @@ Every dataset documents what it represents and what it does not represent. No da
     }
   ]
 }
-
-'''
+```
 
 # Synthetic Datasets
 
