@@ -356,3 +356,178 @@ Benchmark datasets, ground truth generation methods, and evaluation harnesses ar
 ---
 
 ## Repository Structure
+
+veridia/
+├── README.md                          # Project overview, problem statement, and navigation
+├── LICENSE                            # MIT License
+├── CITATION.cff                       # Citation metadata for academic use
+├── CODEOWNERS                         # Repository ownership and review assignments
+├── CONTRIBUTING.md                    # Contribution guidelines and development setup
+├── CHANGELOG.md                       # Version history and release notes
+├── SECURITY.md                        # Security policy and vulnerability reporting
+│
+├── docs/
+│   ├── architecture.md                # Detailed architecture specification
+│   ├── concepts.md                    # Formal definitions, semantics, and constraints
+│   ├── delta-schema.md                # Delta structure, fields, and validation rules
+│   ├── versioning.md                  # Version tag semantics, ordering, and conflict resolution
+│   ├── atom-model.md                  # Knowledge atom lifecycle and identity management
+│   ├── retrieval.md                   # Retrieval modes, query resolution, and state reconstruction
+│   ├── llm-integration.md             # LLM interface contract and interaction patterns
+│   ├── design-decisions.md            # Architecture Decision Records (ADRs)
+│   ├── glossary.md                    # Complete terminology reference
+│   ├── faq.md                         # Frequently asked questions
+│   │
+│   ├── diagrams/
+│   │   ├── system-overview.png        # End-to-end pipeline diagram
+│   │   ├── delta-structure.png        # Delta internal structure
+│   │   ├── query-resolution.png       # Time-pointed query resolution
+│   │   ├── state-transition.png       # State machine and trajectory visualization
+│   │   └── source-files/              # Editable diagram sources (Mermaid, Excalidraw, etc.)
+│   │
+│   └── examples/
+│       ├── policy-retention/          # Walkthrough: evolving data retention policy
+│       │   ├── README.md
+│       │   ├── documents/
+│       │   ├── deltas/
+│       │   └── queries/
+│       ├── api-versioning/            # Walkthrough: deprecated API parameters
+│       │   ├── README.md
+│       │   ├── documents/
+│       │   ├── deltas/
+│       │   └── queries/
+│       └── regulatory-amendments/     # Walkthrough: amended regulations
+│           ├── README.md
+│           ├── documents/
+│           ├── deltas/
+│           └── queries/
+│
+├── benchmarks/
+│   ├── README.md                      # Benchmark methodology and evaluation framework
+│   ├── metrics.md                     # Metric definitions and scoring formulas
+│   ├── baselines/                     # Baseline system configurations
+│   │   ├── traditional-rag/
+│   │   ├── hybrid-rag/
+│   │   └── knowledge-graph/
+│   ├── datasets/                      # Benchmark datasets
+│   │   ├── synthetic/                 # Synthetically generated evolving knowledge
+│   │   └── real-world/                # Anonymized real-world corpora
+│   ├── results/                       # Raw benchmark results and analysis
+│   └── reproducibility/              # Scripts and configurations to reproduce results
+│
+├── src/
+│   ├── core/                          # Core abstractions and models
+│   │   ├── delta.py                   # Delta data structure and validation
+│   │   ├── atom.py                    # Knowledge atom model
+│   │   ├── state.py                   # Truth state representation
+│   │   ├── trajectory.py              # Trajectory model
+│   │   ├── version_tag.py             # Version tag implementation
+│   │   └── store.py                   # Delta store interface
+│   │
+│   ├── ingestion/                     # Document ingestion pipeline
+│   │   ├── parser.py                  # Document parsing and normalization
+│   │   ├── transformer.py             # Document-to-delta transformation
+│   │   ├── extractor.py               # Atom extraction and identification
+│   │   └── validator.py               # Delta validation before storage
+│   │
+│   ├── storage/                       # Storage backends
+│   │   ├── memory_store.py            # In-memory delta store (development/testing)
+│   │   ├── file_store.py              # File-based append-only delta store
+│   │   └── interfaces.py              # Storage interface definitions
+│   │
+│   ├── retrieval/                     # Retrieval and state reconstruction
+│   │   ├── state_reconstructor.py     # Deterministic state reconstruction engine
+│   │   ├── trajectory_resolver.py     # Trajectory resolution
+│   │   ├── query_interpreter.py       # Query-to-retrieval-instruction mapping
+│   │   └── router.py                  # Semantic vs episodic retrieval routing
+│   │
+│   ├── llm/                           # LLM integration layer
+│   │   ├── interpreter.py             # Natural language query interpretation
+│   │   ├── synthesizer.py             # Response synthesis from retrieved state
+│   │   ├── transformer_llm.py         # LLM-based document transformation
+│   │   └── prompts/                   # Prompt templates and management
+│   │       ├── transformation/
+│   │       ├── interpretation/
+│   │       └── synthesis/
+│   │
+│   └── utils/                         # Shared utilities
+│       ├── serialization.py           # Delta serialization/deserialization
+│       ├── hashing.py                 # Content-based identity generation
+│       ├── validation.py              # Schema validation utilities
+│       └── logging.py                 # Structured logging
+│
+├── tests/
+│   ├── unit/                          # Component-level unit tests
+│   │   ├── core/
+│   │   │   ├── test_delta.py
+│   │   │   ├── test_atom.py
+│   │   │   ├── test_state.py
+│   │   │   ├── test_trajectory.py
+│   │   │   └── test_version_tag.py
+│   │   ├── ingestion/
+│   │   │   ├── test_parser.py
+│   │   │   ├── test_transformer.py
+│   │   │   └── test_validator.py
+│   │   ├── storage/
+│   │   │   ├── test_memory_store.py
+│   │   │   └── test_file_store.py
+│   │   └── retrieval/
+│   │       ├── test_state_reconstructor.py
+│   │       └── test_query_interpreter.py
+│   │
+│   ├── integration/                   # Cross-component integration tests
+│   │   ├── test_ingestion_pipeline.py
+│   │   ├── test_retrieval_pipeline.py
+│   │   ├── test_end_to_end.py
+│   │   └── test_determinism.py
+│   │
+│   ├── regression/                    # Regression test suite
+│   │   └── test_version_compatibility.py
+│   │
+│   ├── fixtures/                      # Test data and fixtures
+│   │   ├── documents/
+│   │   ├── deltas/
+│   │   └── expected_states/
+│   │
+│   └── conftest.py                    # Shared test configuration and fixtures
+│
+├── examples/                          # Runnable examples and demos
+│   ├── basic_ingestion.py             # Minimal ingestion example
+│   ├── state_query.py                 # Single-version state query
+│   ├── trajectory_query.py            # Multi-version trajectory query
+│   ├── cross_version_comparison.py    # Comparing two historical states
+│   └── README.md                      # Example setup and execution instructions
+│
+├── scripts/                           # Development and operational scripts
+│   ├── setup.sh                       # Development environment setup
+│   ├── run_tests.sh                   # Test suite execution
+│   ├── run_benchmarks.sh              # Benchmark execution
+│   └── generate_docs.sh               # Documentation generation
+│
+├── .github/
+│   ├── workflows/                     # CI/CD pipeline definitions
+│   │   ├── ci.yml                     # Continuous integration (tests, linting)
+│   │   ├── benchmarks.yml             # Benchmark execution on schedule
+│   │   ├── docs.yml                   # Documentation build and deployment
+│   │   └── release.yml                # Release automation
+│   │
+│   ├── ISSUE_TEMPLATE/                # Issue templates
+│   │   ├── bug_report.md
+│   │   ├── feature_request.md
+│   │   ├── architecture_discussion.md
+│   │   └── documentation_improvement.md
+│   │
+│   └── PULL_REQUEST_TEMPLATE.md       # Pull request template
+│
+├── .vscode/                           # Editor configuration
+│   ├── settings.json
+│   └── extensions.json
+│
+├── .gitignore                         # Git ignore rules
+├── .gitattributes                     # Git attributes for line endings
+├── .editorconfig                      # Editor configuration standardization
+├── pyproject.toml                     # Python project metadata and dependencies
+├── requirements.txt                   # Explicit dependency list
+├── requirements-dev.txt               # Development dependencies
+├── Makefile                           # Common development commands
+└── docker-compose.yml                 # Containerized development environment
