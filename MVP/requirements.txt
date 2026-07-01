@@ -20,7 +20,7 @@ Future versions may support additional formats.
 
 ---
 
-## FR-002 — Delta Generation
+## FR-002 — Delta Generation.
 
 The system shall transform an input document into one or more deltas.
 
