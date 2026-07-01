@@ -141,6 +141,8 @@ Every dataset documents what it represents and what it does not represent. No da
   ]
 }
 
+
+
 # Synthetic Datasets
 
 Synthetic datasets are programmatically generated corpora with known ground truth. They are the primary mechanism for measuring correctness metrics during development because every state transition, causal relationship, and expected output is fully controlled and reproducible.
