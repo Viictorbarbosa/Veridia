@@ -21,16 +21,15 @@ Two failure modes show up repeatedly in production:
 # 2. Why Current Solutions Fall Short
 
 | **Approach** | **Core limitation** |
-|--------------|---------------------|
+|---------------|---------------------|
 | **RAG (embeddings + vector DB)** | Similarity ≠ causality. Retrieves what sounds relevant, not what causally connects. No native versioning — updates require re-embedding and re-indexing. |
 | **Knowledge Graphs** | Causal structure exists, but building and maintaining it at scale requires heavy manual curation or brittle NLP pipelines. Ontology drift becomes a maintenance burden. |
-
-| **Approach** | **Core limitation** |
-|--------------|---------------------|
 | **Event Sourcing** | Captures what happened, but treats events as opaque — no native causal linking or LLM-level interpretation between events. |
 | **CQRS + Event Store** | Solves consistency at the infrastructure level, but adds significant architectural overhead (separate read/write models, replay logic) with no semantic reasoning layer. |
-| **Temporal Databases** | Solve **when** something was true extremely well, but have no concept of causal relationship between records — they are timestamped tables, not causal chains. |
+| **Temporal Databases** | Solve **when** something was true extremely well, but have no concept of causal relationship between records—they are timestamped tables, not causal chains. |
 | **Hybrid Retrieval** | Combines several of the above to patch individual weaknesses, but multiplies operational complexity, latency, and infrastructure cost rather than resolving the underlying gap. |
+
+In short: causal reasoning, temporal consistency, and low-cost updates are each solved partially, by different systems—**never together, in one lightweight architecture.**
 
 In short: causal reasoning, temporal consistency, and low-cost updates are each solved partially, by different systems — **never together, in one lightweight architecture.**
 
