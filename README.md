@@ -24,6 +24,7 @@ Two failure modes show up repeatedly in production:
 |--------------|---------------------|
 | **RAG (embeddings + vector DB)** | Similarity ≠ causality. Retrieves what sounds relevant, not what causally connects. No native versioning — updates require re-embedding and re-indexing. |
 | **Knowledge Graphs** | Causal structure exists, but building and maintaining it at scale requires heavy manual curation or brittle NLP pipelines. Ontology drift becomes a maintenance burden. |
+
 | **Approach** | **Core limitation** |
 |--------------|---------------------|
 | **Event Sourcing** | Captures what happened, but treats events as opaque — no native causal linking or LLM-level interpretation between events. |
