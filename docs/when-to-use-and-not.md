@@ -15,9 +15,6 @@ This document exists to make that decision explicit rather than leaving it to in
 |---------------|----------------|
 | Source documents change frequently, and **"what's true now"** matters | **Veridia** |
 | You need to reconstruct **"what we knew at time X"** (audit, compliance, post-mortem) | **Veridia** |
-
-| Your situation | Recommendation |
-|---------------|----------------|
 | Domain has clear, nameable causal relationships (**A leads to B**) | **Veridia** |
 | Queries are broad, exploratory, or loosely worded | **RAG** |
 | Corpus is large, open-domain, and topically diverse | **RAG** |
