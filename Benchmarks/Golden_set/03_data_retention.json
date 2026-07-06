@@ -1,0 +1,19 @@
+{
+  "document": "golden_set/multi_paragraph/03_data_retention.txt",
+  "difficulty": "multi_paragraph",
+  "domain": "legal",
+  "expected_deltas": [
+    {
+      "causal_key": "legal.post_termination_retention",
+      "content": "Client data is retained for 90 days after contract termination to allow account recovery",
+      "source_span": "Client data is retained for a period of 90 days following contract termination, to allow for account recovery in case of accidental cancellation or disputes over termination terms."
+    },
+    {
+      "causal_key": "legal.deletion_request_handling",
+      "content": "The 90-day post-termination retention window causes deletion requests to default to a soft delete with a 90-day grace period instead of immediate permanent erasure",
+      "source_span": "Because terminated-account data now remains recoverable for the full 90-day retention window described above, any deletion request received during that window is processed as a soft delete with a 90-day grace period, rather than immediate permanent erasure",
+      "caused_by": "legal.post_termination_retention",
+      "note": "The retention policy (paragraph 1) and the deletion-handling consequence (paragraph 4) are connected via an explicit backward reference ('described above') across an unrelated regulatory-compliance paragraph. Tests whether the pipeline resolves the backward reference correctly instead of treating paragraph 4 as introducing a new, unlinked fact."
+    }
+  ]
+}
