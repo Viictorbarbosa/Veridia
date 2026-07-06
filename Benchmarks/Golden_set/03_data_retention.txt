@@ -1,0 +1,9 @@
+Veridia Master Services Agreement — Data Handling Addendum
+
+Client data is retained for a period of 90 days following contract termination, to allow for account recovery in case of accidental cancellation or disputes over termination terms.
+
+During this retention period, data is stored in an access-restricted archive tier and is not available through the standard production API.
+
+Separately, this addendum was updated to comply with recent regional data-protection requirements affecting how deletion requests are handled across all active and terminated accounts.
+
+Because terminated-account data now remains recoverable for the full 90-day retention window described above, any deletion request received during that window is processed as a soft delete with a 90-day grace period, rather than immediate permanent erasure, unless the client explicitly requests immediate permanent deletion in writing.
