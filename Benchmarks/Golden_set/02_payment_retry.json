@@ -1,0 +1,17 @@
+{
+  "document": "golden_set/obvious/02_payment_retry.txt",
+  "difficulty": "obvious",
+  "domain": "billing",
+  "expected_deltas": [
+    {
+      "causal_key": "billing.retry_exhaustion",
+      "content": "Exhausting all 3 payment retry attempts suspends the account and revokes paid feature access",
+      "source_span": "If all 3 retry attempts fail, the account is suspended and access to paid features is revoked."
+    },
+    {
+      "causal_key": "billing.reactivation",
+      "content": "Providing a valid payment method immediately reactivates a suspended account",
+      "source_span": "Suspended accounts can be reactivated immediately once a valid payment method is provided."
+    }
+  ]
+}
