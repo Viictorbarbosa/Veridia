@@ -1,0 +1,26 @@
+{
+  "document": "golden_set/multi_paragraph/01_token_rotation.txt",
+  "difficulty": "multi_paragraph",
+  "domain": "auth",
+  "expected_deltas": [
+    {
+      "causal_key": "auth.key_rotation_policy",
+      "content": "Signing key rotation cycle was shortened from 7 days to 24 hours",
+      "source_span": "all session tokens are issued with a shortened signing key rotation cycle of 24 hours, down from the previous 7-day cycle"
+    },
+    {
+      "causal_key": "auth.rotation_forced_reauth",
+      "content": "The shortened 24-hour rotation cycle forces simultaneous re-authentication across all devices when a rotation boundary is crossed",
+      "source_span": "because signing keys now rotate every 24 hours, any session token issued before a rotation boundary becomes invalid once the next rotation occurs, forcing the user to reauthenticate on all previously logged-in devices simultaneously",
+      "caused_by": "auth.key_rotation_policy",
+      "note": "The cause (24h rotation) is introduced in paragraph 1; the effect (forced simultaneous re-auth) only appears in paragraph 4, after two intervening paragraphs about client config and audit logging. Tests whether extraction links across non-adjacent content instead of only catching same-paragraph relationships."
+    },
+    {
+      "causal_key": "auth.rotation_support_impact",
+      "content": "The forced re-authentication behavior has caused a measurable increase in support tickets about unexpected logouts",
+      "source_span": "This has already resulted in a measurable increase in support tickets related to unexpected logouts",
+      "caused_by": "auth.rotation_forced_reauth",
+      "note": "A second causal hop from the same root cause — tests whether the pipeline can trace a chain two links deep, not just recover isolated pairwise relationships."
+    }
+  ]
+}
