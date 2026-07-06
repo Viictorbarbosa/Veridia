@@ -1,0 +1,19 @@
+{
+  "document": "golden_set/ambiguous/01_refund_policy.txt",
+  "difficulty": "ambiguous",
+  "domain": "billing",
+  "expected_deltas": [
+    {
+      "causal_key": "billing.refund_window",
+      "content": "Reporting a billing issue within 14 days is associated with, but does not guarantee, a refund being issued",
+      "source_span": "Refunds are typically issued when customers report a billing issue within 14 days of the charge.",
+      "note": "The word 'typically' plus the following sentence about individual case review mean the 14-day window is a precondition/correlation, not strict deterministic causation. A pipeline that extracts this as a hard rule ('reporting within 14 days causes a refund') is over-claiming what the text supports."
+    },
+    {
+      "causal_key": "billing.refund_channel_speed",
+      "content": "Submitting a refund request through the self-service portal is associated with faster processing than email",
+      "source_span": "Refund requests submitted through the self-service portal are processed faster than those submitted via email",
+      "note": "Correlation between channel and speed, not necessarily a stated causal mechanism — could plausibly be confounded by request complexity, which the text doesn't rule out."
+    }
+  ]
+}
