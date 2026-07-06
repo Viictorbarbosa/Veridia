@@ -1,0 +1,17 @@
+{
+  "document": "golden_set/obvious/01_session_timeout.txt",
+  "difficulty": "obvious",
+  "domain": "auth",
+  "expected_deltas": [
+    {
+      "causal_key": "auth.token_expiry",
+      "content": "Session timeout triggers automatic logout requiring re-authentication",
+      "source_span": "When the timeout expires, the user is logged out and must re-authenticate to continue."
+    },
+    {
+      "causal_key": "auth.failed_login_lockout",
+      "content": "Five consecutive failed login attempts locks the account for 30 minutes",
+      "source_span": "After 5 consecutive failed attempts, the account is temporarily locked for 30 minutes."
+    }
+  ]
+}
