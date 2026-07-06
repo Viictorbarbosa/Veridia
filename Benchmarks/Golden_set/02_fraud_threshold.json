@@ -1,0 +1,19 @@
+{
+  "document": "golden_set/multi_paragraph/02_fraud_threshold.txt",
+  "difficulty": "multi_paragraph",
+  "domain": "billing",
+  "expected_deltas": [
+    {
+      "causal_key": "billing.fraud_threshold_change",
+      "content": "The automated fraud-detection threshold for new payment methods was lowered, increasing the rate of manual verification",
+      "source_span": "the automated fraud-detection threshold for new payment methods has been lowered, meaning transactions that previously passed automatically now require additional verification more often"
+    },
+    {
+      "causal_key": "billing.payout_delay",
+      "content": "Increased manual verification volume has extended payout clearing time from same-day to 2-3 business days",
+      "source_span": "the average time to clear a payout for affected accounts has increased from same-day to 2-3 business days, and the manual review queue has grown accordingly",
+      "caused_by": "billing.fraud_threshold_change",
+      "note": "Cause stated in paragraph 1, effect stated in paragraph 4, with an unrelated FAQ-update paragraph in between acting as a distractor. Tests whether the pipeline mistakenly links the effect to the FAQ paragraph (adjacent) instead of the actual cause (two paragraphs back)."
+    }
+  ]
+}
