@@ -1,0 +1,7 @@
+Veridia Master Services Agreement — Delivery and Liability
+
+Delivery timelines for custom integration work are estimates only and are not contractually guaranteed. Delays caused by unforeseen circumstances could affect delivery timelines and any associated penalty clauses tied to those timelines.
+
+Client-side changes to requirements after project kickoff are handled through a separate change-order process and are addressed independently of any delay-related liability discussion in this section.
+
+Veridia's liability for delivery delays, where applicable, is limited to service credits and does not extend to consequential damages of any kind.
