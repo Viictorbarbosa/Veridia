@@ -1,0 +1,19 @@
+{
+  "document": "golden_set/ambiguous/02_inactivity_review.txt",
+  "difficulty": "ambiguous",
+  "domain": "auth",
+  "expected_deltas": [
+    {
+      "causal_key": "auth.inactivity_flagging",
+      "content": "90 days of inactivity may result in an account being flagged for review, but is not a guaranteed trigger",
+      "source_span": "Users who haven't logged in for 90 days may have their accounts flagged for review.",
+      "note": "'May' plus the existence of a second, independent flagging rule (unusual access patterns) means inactivity alone isn't established as a sufficient cause. A pipeline should not extract this as unconditional causation."
+    },
+    {
+      "causal_key": "auth.flagging_effect",
+      "content": "Flagging changes review priority but does not restrict account functionality",
+      "source_span": "Flagging does not itself restrict any account functionality; it only changes the internal review priority assigned to that account.",
+      "note": "Tests whether the pipeline correctly extracts a NEGATIVE causal claim (X does NOT cause Y) instead of assuming flagging implies some form of restriction."
+    }
+  ]
+}
