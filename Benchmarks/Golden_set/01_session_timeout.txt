@@ -1,0 +1,7 @@
+Veridia Auth Policy — Session Management
+
+All user sessions are subject to an inactivity timeout of 15 minutes. When the timeout expires, the user is logged out and must re-authenticate to continue.
+
+Failed login attempts are tracked per account. After 5 consecutive failed attempts, the account is temporarily locked for 30 minutes.
+
+Session tokens are issued using a signed JWT format and are not persisted beyond the configured timeout window.
