@@ -1,4 +1,4 @@
-# When to Use Veridia
+ # When to Use Veridia
 
 > For the underlying architecture, see `architecture.md`.  
 > For the problem statement, see `README.md`.
