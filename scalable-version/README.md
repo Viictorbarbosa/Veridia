@@ -4,31 +4,31 @@
 >
 > For decision criteria, see `../docs/when-to-use.md`.
 
-This tier adds **session-based routing** on top of the MVP's flat index. It exists for one reason: a single monolithic **causal-key lookup** becomes slower and more ambiguous as multiple unrelated domains (legal, ops, product, support...) accumulate deltas in the same store.
+This tier adds **session-based routing** on top of the MVP's flat index. It exists for one reason: a single monolithic causal-key lookup becomes slower and more ambiguous as multiple unrelated domains (legal, ops, product, support, etc.) accumulate deltas in the same store.
 
-> **Don't start here.** Build the MVP first, prove the core consistency win with your own *golden set*, and only move to this tier once you've actually hit the bottleneck it solves (see `when-to-use.md` §5).
+> **Don't start here.** Build the MVP first, validate the consistency improvements with your own golden set, and only adopt this tier once you've actually reached the bottleneck it solves (see `when-to-use.md`, §5).
 
 ---
 
 # *1. What's Included*
 
-| **File** | **Purpose** |
-|----------|-------------|
-| `schema.sql` | Extends the MVP delta table with `session_id`, `specialty`, and `relevance_weight`, plus session-scoped indexes. Additive, not a replacement — MVP deltas keep working. |
-| `router.py` | Classifies a question into a session (domain) before lookup runs, with a confidence score. Falls back to cross-session search when confidence is low. |
-| `confidence_test.py` | A lightweight harness containing labeled *(question, expected_session)* pairs used to measure router accuracy before production deployment. |
+| File | Purpose |
+|------|---------|
+| `schema.sql` | Extends the MVP delta schema with `session_id`, `specialty`, and `relevance_weight`, plus session-scoped indexes. The migration is additive and remains compatible with existing MVP data. |
+| `router.py` | Classifies incoming questions into a session (domain) before lookup, producing a confidence score and falling back to cross-session search when confidence is low. |
+| `confidence_test.py` | Evaluates router accuracy using a labeled set of *(question, expected_session)* pairs before production deployment. |
 
 ---
 
 # *2. Requirements*
 
-Same as the MVP:
+This tier has the same requirements as the MVP:
 
 - *Python 3.10+*
 - *A PostgreSQL instance*
 - *An LLM API key*
 
-This tier is a structural change, not a new piece of infrastructure.
+No additional infrastructure is required—this tier introduces a structural change, not a new service.
 
 ---
 
@@ -36,18 +36,14 @@ This tier is a structural change, not a new piece of infrastructure.
 
 ## *1. Migrating from the MVP*
 
-Existing deltas have no `session_id`. Backfill them into a default session before enabling routing:
+If you're upgrading from the MVP, existing deltas won't contain a `session_id`.
 
-```sql
-ALTER TABLE deltas
-ADD COLUMN IF NOT EXISTS session_id TEXT;
+The migration is handled automatically by `schema.sql`, which safely:
 
-UPDATE deltas
-SET session_id = 'default'
-WHERE session_id IS NULL;
-```
+- adds the `session_id` column using `IF NOT EXISTS`;
+- backfills existing rows into the `default` session using an `UPDATE` statement.
 
-> `schema.sql` includes this migration as part of its migration path. See the file for the complete statement set.
+No manual SQL is required.
 
 ---
 
@@ -64,18 +60,15 @@ psql "$DATABASE_URL" -f schema.sql
 A session consists of:
 
 - a `session_id`;
-- a short natural-language **specialty** description that the router matches questions against.
+- a short natural-language specialty description used by the router.
 
 Example:
 
-| **Session** | **Specialty** |
-|------------|---------------|
+| Session | Specialty |
+|---------|-----------|
 | `legal` | *contract terms, compliance clauses, regulatory obligations* |
 
-This configuration can live in either:
-
-- a JSON file;
-- a small database table.
+This configuration can live in a JSON file, a database table, or wherever your router configuration is maintained.
 
 ---
 
@@ -85,7 +78,7 @@ This configuration can live in either:
 python confidence_test.py
 ```
 
-Do **not** enable session-scoped lookup in production until the router reaches a confidence threshold you're comfortable with (see §5).
+Don't enable session-scoped lookup in production until the router reaches a confidence threshold you're comfortable with (see §5).
 
 ---
 
@@ -97,70 +90,70 @@ Question
    ▼
 router.py: classify session
         │
-        ├────────── Confident ──────────► Lookup within session
-        │                                     │
-        │                                     ▼
-        │                              Interpretation
-        │                                     │
-        │                                     ▼
-        │                                   Answer
+        ├── High confidence ─────► Session lookup
+        │                              │
+        │                              ▼
+        │                      Interpretation
+        │                              │
+        │                              ▼
+        │                           Answer
         │
-        └──── Low confidence ──────────► Cross-session lookup
-                                              │
-                                              ▼
-                                       Interpretation
-                                              │
-                                              ▼
-                                           Answer
+        └── Low confidence ──────► Cross-session lookup
+                                       │
+                                       ▼
+                               Interpretation
+                                       │
+                                       ▼
+                                    Answer
 ```
 
-The router runs **before** any causal-key resolution.
+The router executes **before** any causal-key resolution.
 
-It first narrows the search space, then the MVP's key-resolution step (`mvp/query.py`) executes exactly as before, except it is scoped to the matched session instead of the entire store.
+It first narrows the search space, after which the standard MVP key-resolution pipeline (`mvp/query.py`) runs unchanged, but restricted to the selected session.
 
-> Low-confidence queries **must not** silently search only the highest-scoring session. They should always fall back to a cross-session search.
+Queries with low confidence **must never** search only the highest-scoring session. Instead, they fall back to a cross-session search.
 
-A wrong-session miss is worse than a slightly slower cross-session lookup because the query would never reach the correct deltas.
+A wrong-session lookup is worse than a slightly slower cross-session search because it prevents the query from ever reaching the correct deltas.
 
 ---
 
 # *5. The Confidence Test*
 
-`confidence_test.py` reports:
+`confidence_test.py` reports three primary metrics.
 
-| **Metric** | **Description** |
-|------------|-----------------|
+| Metric | Description |
+|--------|-------------|
 | **Routing accuracy** | Percentage of questions classified into the correct session. |
-| **Confidence calibration** | Measures whether the router's confidence score actually correlates with correctness. A router that is confidently wrong is more dangerous than one that is uncertain and triggers fallback. |
-| **Fallback rate** | Frequency of low-confidence cross-session searches. A steadily increasing fallback rate usually indicates overlapping session definitions. |
+| **Confidence calibration** | Measures whether higher confidence actually correlates with correct classifications. A router that is confidently wrong is more dangerous than one that triggers fallback. |
+| **Fallback rate** | Percentage of queries that trigger cross-session lookup due to low confidence. Increasing fallback rates usually indicate overlapping session definitions. |
 
-> Re-run this test whenever you add, remove, or redefine a session.
+Re-run this test whenever sessions are added, removed, or redefined.
 
-Routing accuracy is not only a property of the code—it also depends on your current session boundaries.
+Routing accuracy depends not only on the router implementation but also on how well your session boundaries are defined.
 
 ---
 
 # *6. Success Criteria*
 
-- [ ] Routing accuracy on the labeled dataset remains above your chosen threshold (start conservatively, e.g. **90%+**).
-- [ ] Low-confidence queries reliably fall back to cross-session search instead of returning wrong-session answers.
-- [ ] Query latency with routing enabled remains acceptable compared to the MVP's flat lookup.
-- [ ] Adding a new session does not silently degrade accuracy on existing sessions (re-run `confidence_test.py` after every session change).
+- [ ] Routing accuracy on the labeled dataset remains above your chosen threshold (a conservative starting point is **90%+**).
+- [ ] Low-confidence queries consistently fall back to cross-session search instead of returning incorrect session results.
+- [ ] Query latency remains acceptable compared to the MVP's flat lookup.
+- [ ] Adding or modifying sessions does not silently reduce accuracy on existing sessions (re-run `confidence_test.py` after every session change).
 
 ---
 
 # *7. Known Limitations at This Tier*
 
-| **Limitation** | **Description** |
-|---------------|-----------------|
-| **Routing precision** | Becomes the primary bottleneck. A misclassified query never reaches the correct deltas, regardless of retrieval quality within a session. |
-| **Session maintenance** | Overlapping or poorly defined specialties gradually reduce router accuracy unless fallback rates are actively monitored. |
-| **Cross-session fallback** | Increases latency but preserves correctness. Persistently high fallback rates usually indicate poorly scoped sessions rather than router tuning issues. |
-| **Per-session specialization** | Specialized prompts or models (mentioned in `architecture.md` §5.2) are **not** included in this tier. This layer introduces routing only. |
+| Limitation | Description |
+|------------|-------------|
+| **Routing precision** | Routing becomes the primary bottleneck. A misclassified query never reaches the correct deltas, regardless of retrieval quality within a session. |
+| **Session maintenance** | Poorly defined or overlapping specialty descriptions gradually reduce routing accuracy unless the confidence metrics are actively monitored. |
+| **Cross-session fallback** | Fallback improves correctness at the cost of additional latency. Persistently high fallback rates usually indicate that session boundaries should be revised rather than the router retuned. |
+| **Per-session specialization** | Per-domain prompts or specialized models (mentioned in `architecture.md` §5.2) are intentionally outside the scope of this tier. This layer introduces routing only. |
 
 ---
 
 # *8. Next Steps*
 
-- Log results against your *golden set* in `../benchmarks/results.md`, split by session.
-- If delta volume within a single session becomes large enough to require further partitioning, revisit session granularity instead of adding another architectural tier.
+- Record benchmark results for each session in `../benchmarks/results.md`.
+- If a single session eventually accumulates enough deltas to require further partitioning, revisit the session design instead of introducing another architectural tier.
