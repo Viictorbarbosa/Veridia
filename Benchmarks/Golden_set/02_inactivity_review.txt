@@ -1,0 +1,7 @@
+Veridia Auth Policy — Account Review
+
+Users who haven't logged in for 90 days may have their accounts flagged for review. Flagged accounts are not automatically suspended, but are prioritized for a manual security check the next time login is attempted.
+
+Accounts associated with unusual access patterns, such as logins from multiple countries within a short time window, are also flagged independently of the inactivity rule.
+
+Flagging does not itself restrict any account functionality; it only changes the internal review priority assigned to that account.
