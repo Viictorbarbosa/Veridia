@@ -1,0 +1,17 @@
+{
+  "document": "golden_set/obvious/03_contract_termination.txt",
+  "difficulty": "obvious",
+  "domain": "legal",
+  "expected_deltas": [
+    {
+      "causal_key": "legal.termination_notice",
+      "content": "Providing 30 days written notice allows either party to terminate the agreement",
+      "source_span": "Either party may terminate this agreement by providing 30 days written notice to the other party."
+    },
+    {
+      "causal_key": "legal.early_termination_fee",
+      "content": "Terminating before the 12-month term ends triggers a 20% early termination fee",
+      "source_span": "If the Client terminates before the end of the initial 12-month term, an early termination fee equal to 20% of the remaining contract value applies."
+    }
+  ]
+}
