@@ -1,0 +1,7 @@
+Veridia Billing Policy — Payment Processing
+
+When a scheduled payment fails, the system automatically retries the charge up to 3 times over 7 days. If all 3 retry attempts fail, the account is suspended and access to paid features is revoked.
+
+Customers are notified by email after each failed attempt, giving them the opportunity to update their payment method before suspension occurs.
+
+Suspended accounts can be reactivated immediately once a valid payment method is provided.
