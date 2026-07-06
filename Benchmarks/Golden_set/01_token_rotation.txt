@@ -1,0 +1,11 @@
+Veridia Auth Policy — Token Rotation
+
+Starting this quarter, all session tokens are issued with a shortened signing key rotation cycle of 24 hours, down from the previous 7-day cycle. This change was introduced as part of a broader security hardening initiative following an internal audit.
+
+The rotation cycle applies globally across all client applications, including mobile, web, and third-party integrations that authenticate through the Veridia identity provider. No configuration changes are required on the client side, since token validation already checks signing key freshness on every request.
+
+Audit logging for authentication events has also been expanded to capture the specific signing key version used for each session, making it easier to trace incidents back to a specific rotation window.
+
+Support teams should be aware that because signing keys now rotate every 24 hours, any session token issued before a rotation boundary becomes invalid once the next rotation occurs, forcing the user to reauthenticate on all previously logged-in devices simultaneously.
+
+This has already resulted in a measurable increase in support tickets related to unexpected logouts, which the team is monitoring closely.
