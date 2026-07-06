@@ -1,0 +1,19 @@
+{
+  "document": "golden_set/ambiguous/03_delay_liability.txt",
+  "difficulty": "ambiguous",
+  "domain": "legal",
+  "expected_deltas": [
+    {
+      "causal_key": "legal.unforeseen_delay_liability",
+      "content": "Delays from unforeseen circumstances could affect delivery timelines and related penalty clauses, but the relationship is stated conditionally, not as a guaranteed outcome",
+      "source_span": "Delays caused by unforeseen circumstances could affect delivery timelines and any associated penalty clauses tied to those timelines.",
+      "note": "'Could affect' is a soft causal hedge. A pipeline may over-confidently extract a hard rule ('unforeseen delay waives penalty') that this sentence alone doesn't actually establish."
+    },
+    {
+      "causal_key": "legal.delay_liability_cap",
+      "content": "Veridia's liability for delivery delays is limited to service credits, excluding consequential damages",
+      "source_span": "Veridia's liability for delivery delays, where applicable, is limited to service credits and does not extend to consequential damages of any kind.",
+      "note": "Tests whether the pipeline treats 'where applicable' as a meaningful qualifier rather than dropping it and asserting the cap applies universally."
+    }
+  ]
+}
