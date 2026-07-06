@@ -1,0 +1,7 @@
+Veridia Billing Policy — Refund Handling
+
+Refunds are typically issued when customers report a billing issue within 14 days of the charge. Our support team reviews each case individually, taking into account account history and the nature of the issue reported.
+
+In some cases, refunds may also be granted outside the 14-day window at the discretion of the billing team, particularly for enterprise accounts with dedicated account managers.
+
+Refund requests submitted through the self-service portal are processed faster than those submitted via email, though both follow the same underlying review process.
