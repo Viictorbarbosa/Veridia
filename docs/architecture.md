@@ -1,7 +1,5 @@
 # Veridia Architecture
 
-> **For the problem statement and comparative rationale, see `README.md`.**  
-> **For guidance on when to use Veridia vs. alternatives, see `when-to-use.md`.**
 
 This document describes the internal architecture of Veridia:
 
