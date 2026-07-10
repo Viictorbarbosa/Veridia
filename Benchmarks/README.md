@@ -1,7 +1,5 @@
 # Veridia — Benchmarks
 
-For the architectural comparison table (**theoretical, not yet measured**), see `../docs/architecture.md` and `../README.md`.
-
 The comparison tables elsewhere in this repo describe **complexity classes** — what should be true by design.
 
 This folder is where those claims get replaced with actual numbers from your own store:
