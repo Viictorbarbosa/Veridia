@@ -1,8 +1,5 @@
  # When to Use Veridia
 
-> For the underlying architecture, see `architecture.md`.  
-> For the problem statement, see `README.md`.
-
 Veridia is **not** a universal replacement for RAG. It excels under a specific set of conditions and performs worse under others.
 
 This document exists to make that decision explicit rather than leaving it to intuition.
