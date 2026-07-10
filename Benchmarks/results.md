@@ -36,7 +36,7 @@ This appends a block in this exact format directly to this file:
 - Estimated database index hit rate: **>99%**
 - Estimated hallucination rate after grounding: **<1%**
 - Estimated contradiction rate between responses: **<0.5%**
-```
+
 ```
 
 > **Note:** The block above is a formatting example only — it was generated with synthetic numbers to show the shape of the output, **not** a real run. Delete this note once the first genuine entry lands below.
