@@ -16,11 +16,11 @@ This appends a block in this exact format directly to this file:
 ## 2026-07-06 — commit abc1234 — claude-sonnet-5
 
 - Golden set: 9 documents, 19 expected deltas
-- Grounding rejection rate: 10%
-- Verification rejection rate: 5%
-- Precision: 0.88 · Recall: 0.84
-- Update latency (avg, n=20): 340ms
-- Query latency (avg, n=19): 1.9s
+- Grounding rejection rate: 0%
+- Verification rejection rate: 0%
+- Precision: 0.93 · Recall: 0.95
+- Update latency (avg, n=20): 180ms
+- Query latency (avg, n=19): 500ms
 - Consistency check: PASS (5/5)
 ```
 
