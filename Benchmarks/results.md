@@ -16,12 +16,23 @@ This appends a block in this exact format directly to this file:
 ## 2026-07-06 — commit abc1234 — claude-sonnet-5
 
 - Golden set: 9 documents, 19 expected deltas
-- Grounding rejection rate: 0%
-- Verification rejection rate: 0%
-- Precision: 0.93 · Recall: 0.95
-- Update latency (avg, n=20): 180ms
-- Query latency (avg, n=19): 500ms
-- Consistency check: PASS (5/5)
+- Grounding rejection rate: ~4%
+- Verification rejection rate: ~2%
+- Precision: ~0.95
+- Recall: ~0.93
+- F1 Score: ~0.94
+- Estimated answer faithfulness: ~96%
+- Estimated contextual completeness: ~94%
+- Estimated reasoning consistency: ~98%
+- Update latency (avg, n=20): ~170 ms
+- Update latency (P95): ~240 ms
+- Query latency (avg, n=19): ~820 ms
+- Query latency (P95): ~1.2 s
+- Consistency check: Expected PASS (5/5)
+- Estimated token reduction versus full-context prompting: 70–90%
+- Estimated database index hit rate: >99%
+- Estimated hallucination rate after grounding: <2%
+- Estimated contradiction rate between responses: <1%
 ```
 
 > **Note:** The block above is a formatting example only — it was generated with synthetic numbers to show the shape of the output, **not** a real run. Delete this note once the first genuine entry lands below.
