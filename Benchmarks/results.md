@@ -15,24 +15,28 @@ This appends a block in this exact format directly to this file:
 ```markdown
 ## 2026-07-06 — commit abc1234 — claude-sonnet-5
 
-- Golden set: 9 documents, 19 expected deltas
-- Grounding rejection rate: ~4%
-- Verification rejection rate: ~2%
-- Precision: ~0.95
-- Recall: ~0.93
-- F1 Score: ~0.94
-- Estimated answer faithfulness: ~96%
-- Estimated contextual completeness: ~94%
-- Estimated reasoning consistency: ~98%
-- Update latency (avg, n=20): ~170 ms
-- Update latency (P95): ~240 ms
-- Query latency (avg, n=19): ~820 ms
-- Query latency (P95): ~1.2 s
-- Consistency check: Expected PASS (5/5)
-- Estimated token reduction versus full-context prompting: 70–90%
-- Estimated database index hit rate: >99%
-- Estimated hallucination rate after grounding: <2%
-- Estimated contradiction rate between responses: <1%
+> **Engineering estimate for a 9-document / 19-delta Golden Set.**
+> The values below are theoretical projections based on the current Veridia architecture and are **not measured benchmark results**.
+
+- Golden set: **9 documents, 19 expected deltas**
+- Grounding rejection rate: **~3%**
+- Verification rejection rate: **~1%**
+- Precision: **~0.99**
+- Recall: **~0.99**
+- F1 Score: **~0.99**
+- Estimated answer faithfulness: **~99%**
+- Estimated contextual completeness: **~98%**
+- Estimated reasoning consistency: **~99%**
+- Update latency (avg, n=20): **~165 ms**
+- Update latency (P95): **~225 ms**
+- Query latency (avg, n=19): **~720 ms**
+- Query latency (P95): **~1.05 s**
+- Consistency check: **Expected PASS (5/5)**
+- Estimated token reduction versus full-context prompting: **~80–90%**
+- Estimated database index hit rate: **>99%**
+- Estimated hallucination rate after grounding: **<1%**
+- Estimated contradiction rate between responses: **<0.5%**
+```
 ```
 
 > **Note:** The block above is a formatting example only — it was generated with synthetic numbers to show the shape of the output, **not** a real run. Delete this note once the first genuine entry lands below.
