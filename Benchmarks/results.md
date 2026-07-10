@@ -18,25 +18,48 @@ This appends a block in this exact format directly to this file:
 > **Engineering estimate for a 9-document / 19-delta Golden Set.**
 > The values below are theoretical projections based on the current Veridia architecture and are **not measured benchmark results**.
 
-- Golden set: **9 documents, 19 expected deltas**
-- Grounding rejection rate: **~3%**
-- Verification rejection rate: **~1%**
-- Precision: **~0.99**
-- Recall: **~0.99**
-- F1 Score: **~0.99**
-- Estimated answer faithfulness: **~99%**
-- Estimated contextual completeness: **~98%**
-- Estimated reasoning consistency: **~99%**
-- Update latency (avg, n=20): **~165 ms**
-- Update latency (P95): **~225 ms**
-- Query latency (avg, n=19): **~720 ms**
-- Query latency (P95): **~1.05 s**
-- Consistency check: **Expected PASS (5/5)**
-- Estimated token reduction versus full-context prompting: **~80–90%**
-- Estimated database index hit rate: **>99%**
-- Estimated hallucination rate after grounding: **<1%**
-- Estimated contradiction rate between responses: **<0.5%**
+## 2026-07-06 — commit abc1234 — claude-sonnet-5
 
+> Theoretical comparison estimate.
+> Values are projected expectations and not measured benchmark results.
+
+### Veridia
+
+- Golden set: 9 documents, 19 expected deltas
+- Grounding rejection rate: ~3%
+- Verification rejection rate: ~1%
+- Precision: ~0.99
+- Recall: ~0.99
+- F1 Score: ~0.99
+- Estimated answer faithfulness: ~99%
+- Estimated contextual completeness: ~98%
+- Estimated reasoning consistency: ~99%
+- Update latency (avg, n=20): ~165 ms
+- Query latency (avg, n=19): ~720 ms
+- Consistency check: Expected PASS (5/5)
+- Estimated token reduction versus full-context prompting: ~80–90%
+- Estimated hallucination rate after grounding: <1%
+- Estimated contradiction rate: <0.5%
+
+---
+
+### Traditional RAG Baseline
+
+- Golden set: 9 documents, 19 expected deltas
+- Grounding rejection rate: ~8–15%
+- Verification rejection rate: ~5–10%
+- Precision: ~0.85–0.92
+- Recall: ~0.80–0.90
+- F1 Score: ~0.84–0.91
+- Estimated answer faithfulness: ~85–92%
+- Estimated contextual completeness: ~80–90%
+- Estimated reasoning consistency: ~85–93%
+- Query latency (avg): ~1.2–2.5 s
+- Query latency (P95): ~2.5–5 s
+- Consistency check: PASS (variable)
+- Estimated token reduction versus full-context prompting: ~30–60%
+- Estimated hallucination rate: ~5–15%
+- Estimated contradiction rate between responses: ~3–8%
 ```
 
 > **Note:** The block above is a formatting example only — it was generated with synthetic numbers to show the shape of the output, **not** a real run. Delete this note once the first genuine entry lands below.
