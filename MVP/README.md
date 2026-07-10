@@ -1,8 +1,6 @@
 # Veridia — MVP
 
-For full architecture details, see `../docs/architecture.md`.
 
-For decision criteria, see `../docs/when-to-use.md`.
 
 This is the minimal implementation of Veridia: a single Postgres instance, a single LLM for both extraction and query-time interpretation, no domain routing, no caching.
 
