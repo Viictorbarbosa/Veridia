@@ -1,8 +1,5 @@
 # *Veridia — Scalable Tier*
 
-> For full architecture details, see `../docs/architecture.md`.
->
-> For decision criteria, see `../docs/when-to-use.md`.
 
 This tier adds **session-based routing** on top of the MVP's flat index. It exists for one reason: a single monolithic causal-key lookup becomes slower and more ambiguous as multiple unrelated domains (legal, ops, product, support, etc.) accumulate deltas in the same store.
 
